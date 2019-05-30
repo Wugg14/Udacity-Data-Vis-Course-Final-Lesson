@@ -4,29 +4,57 @@
   <meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.min.js"></script>
     <style>
+      div.year_buttons {
+        position: fixed;
+        top: 5px;
+        left: 50px;
+      }
+      div.year_buttons div {
+        background-color: rgb(251, 201, 127);
+        padding: 3px;
+        margin: 7px;
+      }
     </style>
-    <script type="text/javascript">  
+    <script type="text/javascript">
       function draw(geo_data) {
         "use strict";
-        var margin = 75,
+        const margin = 75,
             width = 1400 - margin,
             height = 600 - margin;
 
-        var svg = d3.select("body")
+        //Append Title
+        d3.select("body")
+            .append("h2")
+            .style("text-align", "center")
+            .text("World Cup ");
+
+        let svg = d3.select("body")
             .append("svg")
             .attr("width", width + margin)
             .attr("height", height + margin)
+            //like a div for our svg
             .append('g')
             .attr('class', 'map');
 
-        var projection = d3.geo.mercator()
+        let years = [];
+
+        for(let i=1930;i<2015;i+=4){
+          if(i!== 1942 && i!== 1946){
+            years.push(i);
+          }
+        }
+
+
+        //projection instructions for D3
+        let projection = d3.geo.mercator()
                                .scale(140)
                                .translate([width / 2, height / 1.2]);
 
         //create new path using the projection we defined
-        var path = d3.geo.path().projection(projection);
+        let path = d3.geo.path().projection(projection);
 
-        var map = svg.selectAll('path')
+        //create the map
+        let map = svg.selectAll('path')
                      .data(geo_data.features)
                      .enter()
                      .append('path')
@@ -35,35 +63,39 @@
                      .style('stroke', 'black')
                      .style('stroke-width', 0.5);
 
+
         function plot_points(data) {
+
+          debugger;
 
           //sums the attendance for each year, then maps the mean x and y point for each year
             function agg_year(leaves) {
-                var total = d3.sum(leaves, function(d) {
+                let total = d3.sum(leaves, function(d) {
                     return d['attendance'];
                 });
 
-                var coords = leaves.map(function(d) {
+                let coords = leaves.map(function(d) {
                     return projection([+d.long, +d.lat]);
                 });
 
-                var center_x = d3.mean(coords, function(d) {
+                let center_x = d3.mean(coords, function(d) {
                     return d[0];
                 });
 
-                var center_y = d3.mean(coords, function(d) {
+                let center_y = d3.mean(coords, function(d) {
                     return d[1];
                 });
 
+                //Now Sort through which teams played in which world cup
                 //create empty data set
-                var teams = d3.set();
+                let teams = d3.set();
 
                 //for each game add the teams to the data set, set() will not add duplicates
                 leaves.forEach(function(d){
                   teams.add(d['team1']);
                   teams.add(d['team2']);
                 });
-
+                //Returns aggregate for the world cup year
                 return {
                   //values for each key
                   'attendance' : total,
@@ -75,7 +107,7 @@
             }
 
             //groups each set of data into key value pairs based on year
-            var nested = d3.nest()
+            let nested = d3.nest()
                     //key is date object
                            .key(function(d) {
                               return d['date'].getUTCFullYear();
@@ -84,9 +116,9 @@
                            .rollup(agg_year)
                            .entries(data);
 
-            var attendance_extent = d3.extent(nested, function(d){
+            let attendance_extent = d3.extent(nested, function(d){
               return d.values['attendance'];
-            })
+            });
 
             var radius = d3.scale.sqrt()
                     .domain(attendance_extent)
@@ -94,8 +126,9 @@
 
             function key_func(d){
               return d['key'];
-            };
+            }
 
+            //place bubbles
             svg.append('g')
                .attr("class", "bubble")
                .selectAll("circle")
@@ -117,13 +150,17 @@
 
           function update(year){
             // filter only adds elements from the array that the accessor function returns true from
-            var filtered = nested.filter(function(d){
+            let filtered = nested.filter(function(d){
               //turns date string into JS object, compares to year variable. Returns true or false
               return new Date(d['key']).getUTCFullYear() === year;
             });
 
+            //Update Title
+            d3.select('h2')
+                .text("World Cup " + year);
+
             //new selection of circles where the key is correct
-            var circles = svg.selectAll('circle')
+            let circles = svg.selectAll('circle')
                     .data(filtered, key_func);
 
             //remove all the circles not selected (in the exit selection)
@@ -132,11 +169,13 @@
             //append new circles bound with the new data in the enter selection
             circles.enter()
                     .append("circle")
+                    .transition()
+                    .duration(500)
                     .attr('cx', function(d){ return d.values['x'];})
                     .attr('cy', function (d){ return d.values['y'];})
-                    .attr('r', function(d){ return radius(d.values['attendance'])})
+                    .attr('r', function(d){ return radius(d.values['attendance'])});
 
-            var countries = filtered[0].values['teams'];
+            let countries = filtered[0].values['teams'];
 
             function update_countries(d){
               //indexOf searches for the property for each item in the array, if found returns the index of the item, otherwise returns -1
@@ -149,31 +188,59 @@
 
             //change colors of participating nations in the cup
             svg.selectAll('path')
+                    .transition()
+                    .duration(500)
                     .style('fill', update_countries)
-                    .style('stroke', update_countries)
+                    .style('stroke', update_countries);
           }
 
-          var years = [];
-          for(var i=1930;i<2015;i+=4){
-            if(i!== 1942 && i!== 1946){
-              years.push(i);
-            }
-          }
+          let year_index = 0;
 
-          var year_index = 0;
-
-          var year_interval = setInterval(function(){
+          let year_interval = setInterval(function(){
             update(years[year_index]);
 
             year_index++;
 
             if(year_index >= years.length){
-              clearInterval(year_interval);
-            }
-          }, 1000);
-        };
 
-        var format = d3.time.format("%d-%m-%Y (%H:%M h)");
+              clearInterval(year_interval);
+
+              let buttons = d3.select("body")
+                      .append("div")
+                      .attr("class", "year_buttons")
+                      .selectAll("year_buttons")
+                      .data(years)
+                      .enter()
+                      .append("div")
+                      .text(function(d) {
+                        return d
+                      });
+
+
+              buttons.on("click", function(d){
+
+                d3.select(".year_buttons")
+                        .selectAll("div")
+                        .transition()
+                        .duration(500)
+                        .style("background", "rgb(251, 201, 127)")
+                        .style("color", "black");
+
+                d3.select(this)
+                        .transition()
+                        .duration(500)
+                        .style("background", "lightBlue")
+                        .style("color", "white");
+
+                update(d)
+              });
+            }
+
+          }, 1000);
+
+        }
+
+        const format = d3.time.format("%d-%m-%Y (%H:%M h)");
 
         d3.tsv("world_cup_geo.tsv", function(d) {
           d['attendance'] = +d['attendance'];
@@ -181,7 +248,7 @@
           d['date'] = format.parse(d['date']);
           return d;
         }, plot_points);
-      };
+      }
       </script>
   </head>
 <body>
@@ -189,7 +256,7 @@
   /*
     Use D3 to load the GeoJSON file
     */
-    
+
 d3.json("world_countries.json", draw);
   </script>
 </body>
