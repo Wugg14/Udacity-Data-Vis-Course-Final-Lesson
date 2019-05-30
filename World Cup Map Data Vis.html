@@ -4,6 +4,13 @@
   <meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.min.js"></script>
     <style>
+      circle {
+        fill: orange;
+        stroke: black;
+        stroke-width: 0.7;
+        opacity: 0.7;
+      }
+
       div.year_buttons {
         position: fixed;
         top: 5px;
@@ -66,8 +73,6 @@
 
         function plot_points(data) {
 
-          debugger;
-
           //sums the attendance for each year, then maps the mean x and y point for each year
             function agg_year(leaves) {
                 let total = d3.sum(leaves, function(d) {
@@ -116,12 +121,13 @@
                            .rollup(agg_year)
                            .entries(data);
 
-            let attendance_extent = d3.extent(nested, function(d){
+            let attendance_max = d3.max(nested, function(d) {
               return d.values['attendance'];
             });
 
-            var radius = d3.scale.sqrt()
-                    .domain(attendance_extent)
+            let radius = d3.scale.sqrt()
+                    .domain([0, attendance_max])
+                    //range of pixel sizes they can be
                     .range([0,12]);
 
             function key_func(d){
@@ -143,10 +149,6 @@
                .attr('r', function(d) {
                     return radius(d.values['attendance'])
                })
-               .attr('fill', 'rgb(247, 148, 32)')
-               .attr('stroke', 'black')
-               .attr('stroke-width', 0.7)
-               .attr('opacity', 0.7)
 
           function update(year){
             // filter only adds elements from the array that the accessor function returns true from
@@ -173,7 +175,10 @@
                     .duration(500)
                     .attr('cx', function(d){ return d.values['x'];})
                     .attr('cy', function (d){ return d.values['y'];})
-                    .attr('r', function(d){ return radius(d.values['attendance'])});
+                    .attr('r', function(d){
+                      return radius(d.values['attendance']);
+                    });
+
 
             let countries = filtered[0].values['teams'];
 
@@ -192,6 +197,7 @@
                     .duration(500)
                     .style('fill', update_countries)
                     .style('stroke', update_countries);
+
           }
 
           let year_index = 0;

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1e4ea24-0bfe-4a41-9aa1-c9b17b8e9f4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/World Cup Map Data Vis.html" beforeDir="false" afterPath="$PROJECT_DIR$/World Cup Map Data Vis.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -16,12 +14,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/World Cup Map Data Vis.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3825">
-              <caret line="225" column="66" lean-forward="true" selection-start-line="225" selection-start-column="66" selection-end-line="225" selection-end-column="66" />
+            <state relative-caret-position="-116">
+              <caret line="186" column="47" selection-start-line="186" selection-start-column="37" selection-end-line="186" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Temp/23_globe_fixing_buttons.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1210">
+              <caret line="163" column="44" selection-start-line="163" selection-start-column="44" selection-end-line="163" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -32,13 +39,20 @@
     <findStrings>
       <find>geo_data</find>
       <find>attendance_exten</find>
-      <find>agg</find>
       <find>nest</find>
       <find>filtered</find>
       <find>map</find>
-      <find>update</find>
       <find>button</find>
       <find>clearI</find>
+      <find>update</find>
+      <find>agg</find>
+      <find>attendance_</find>
+      <find>radiu</find>
+      <find>fill</find>
+      <find>attr</find>
+      <find>name</find>
+      <find>countries</find>
+      <find>properties</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -49,15 +63,16 @@
       <list>
         <option value="$PROJECT_DIR$/01_globe.html" />
         <option value="$PROJECT_DIR$/08_globe_sizing_circles.html" />
+        <option value="$USER_HOME$/AppData/Local/Temp/23_globe_fixing_buttons.html" />
         <option value="$PROJECT_DIR$/World Cup Map Data Vis.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2614" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1874" />
-    <option name="height" value="1096" />
+    <option name="width" value="2576" />
+    <option name="height" value="1456" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -97,18 +112,17 @@
       <option name="presentableId" value="Default" />
       <updated>1559146614377</updated>
       <workItem from="1559146618736" duration="11423000" />
-      <workItem from="1559238292718" duration="7421000" />
+      <workItem from="1559238292718" duration="11214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18844000" />
+    <option name="totallyTimeSpent" value="22637000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2614" y="-8" width="1874" height="1096" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="2576" height="1456" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13562092" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.098108746" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -133,10 +147,17 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/01_globe.html" />
     <entry file="file://$PROJECT_DIR$/08_globe_sizing_circles.html" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/23_globe_fixing_buttons.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1210">
+          <caret line="163" column="44" selection-start-line="163" selection-start-column="44" selection-end-line="163" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/World Cup Map Data Vis.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3825">
-          <caret line="225" column="66" lean-forward="true" selection-start-line="225" selection-start-column="66" selection-end-line="225" selection-end-column="66" />
+        <state relative-caret-position="-116">
+          <caret line="186" column="47" selection-start-line="186" selection-start-column="37" selection-end-line="186" selection-end-column="47" />
         </state>
       </provider>
     </entry>
